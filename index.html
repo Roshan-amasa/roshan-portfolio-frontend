@@ -778,6 +778,26 @@
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 
+  <!-- START VISITOR COUNTER -->
+<div class="row mb-5 justify-content-center">
+	<div class="col-md-5 text-center">
+		<div class="ftco-footer-widget">
+				<p><h3 class="heading">Visitors for this page are: <span id="visitorCount" > </span></h3>
+					
+				</p>
+		</div>
+	</div>
+</div> <!-- END VISITOR COUNTER -->
+
+
+<script>
+	fetch('https://h2w85xcmm0.execute-api.eu-central-1.amazonaws.com/Prod/add')
+		.then(() => fetch('https://h2w85xcmm0.execute-api.eu-central-1.amazonaws.com/Prod/count') )          
+		.then(response => response.json())
+		.then((data) => {
+			document.getElementById('visitorCount').innerText = data.count
+		})
+</script>
 
   <script src="js/jquery.min.js"></script>
   <script src="js/jquery-migrate-3.0.1.min.js"></script>
