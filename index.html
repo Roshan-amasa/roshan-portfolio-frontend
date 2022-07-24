@@ -88,7 +88,7 @@
 		            <h2 class="mb-4">About Me</h2>
 		            <p>Early adopter with strong focus on Analytics. Capable of creating a Product vision and Data strategy.
                   Excels at wrapping up the projects quickly with Wire-framing/Prototypes and help building Minimum viable product.
-                  Over 11+ yrs Industry experience.</p>
+                  Over 12+ yrs Industry experience.</p>
 		            <ul class="about-info mt-4 px-md-0 px-2">
 		            	<li class="d-flex"><span>Name:</span> <span>Roshan Amasa</span></li>
 		            	<li class="d-flex"><span>Address:</span> <span>Fallstr.40, 81369 Munich, Germany</span></li>
@@ -783,7 +783,7 @@
 	<div class="col-md-5 text-center">
 		<div class="ftco-footer-widget">
 				<p><h3 class="heading">Visitors for this page are: <span id="visitorCount" > </span></h3>
-					
+
 				</p>
 		</div>
 	</div>
@@ -791,7 +791,7 @@
 
 <script>
 	fetch('https://h2w85xcmm0.execute-api.eu-central-1.amazonaws.com/Prod/add')
-		.then(() => fetch('https://h2w85xcmm0.execute-api.eu-central-1.amazonaws.com/Prod/count') )          
+		.then(() => fetch('https://h2w85xcmm0.execute-api.eu-central-1.amazonaws.com/Prod/count') )
 		.then(response => response.json())
 		.then((data) => {
 			document.getElementById('visitorCount').innerText = data.count
