@@ -951,8 +951,101 @@
     }
 
 
-    @media (max-width: 900px) {
-      .strength-row { grid-template-columns: 1fr; gap: 6px; }
+    /* ══════════════════════════════════════════════
+       HAMBURGER MENU
+    ══════════════════════════════════════════════ */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      margin-left: auto;
+      z-index: 400;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: rgba(255,255,255,0.75);
+      border-radius: 2px;
+      transition: all 0.25s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .nav-mobile-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(5,8,16,0.97);
+      z-index: 350;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .nav-mobile-overlay.open { display: flex; }
+
+    .nav-mobile-close {
+      position: absolute;
+      top: 18px; right: 20px;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.5);
+      font-size: 24px;
+      cursor: pointer;
+      line-height: 1;
+      padding: 4px 8px;
+    }
+    .nav-mobile-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      width: 100%;
+    }
+    .nav-mobile-links a {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 18px 20px;
+      font-size: 22px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      transition: color 0.2s;
+    }
+    .nav-mobile-links a:hover { color: #fff; }
+    .nav-mobile-cv {
+      margin-top: 32px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      background: #D97757;
+      padding: 14px 36px;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+
+    /* ══════════════════════════════════════════════
+       RESPONSIVE — TABLET (≤ 1024px)
+    ══════════════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      :root { --track-w: 130px; }
+
+      .waypoint-label { font-size: 7px; letter-spacing: 0.4px; }
+
+      .scene { padding: 80px 48px; }
+
       .skills-blocks { grid-template-columns: 1fr 1fr; }
       .skills-blocks .skill-block:last-child { grid-column: 1 / -1; }
       .skills-blocks .skill-block:last-child .skill-block-list {
@@ -960,45 +1053,279 @@
         grid-template-columns: 1fr 1fr;
         gap: 0 32px;
       }
+
+      .strength-row { grid-template-columns: 130px 1fr; gap: 20px; }
+
+      .hero-stats { gap: 36px; }
     }
 
-    @media (max-width: 600px) {
-      .skills-blocks { grid-template-columns: 1fr; }
-    }
-
+    /* ══════════════════════════════════════════════
+       RESPONSIVE — MOBILE (≤ 680px)
+    ══════════════════════════════════════════════ */
     @media (max-width: 680px) {
       :root { --track-w: 0px; }
 
       #track, #character { display: none; }
 
-      nav { padding-left: 20px; }
+      nav { padding: 0 16px 0 16px; }
+      .nav-links { display: none; }
+      .nav-cv    { display: none; }
+      .nav-hamburger { display: flex; }
 
-      .scene { padding: 80px 24px 60px; }
+      .scene { padding: 72px 22px 52px; overflow-x: hidden; }
+      .scene--full { padding-top: calc(var(--nav-h) + 28px); }
 
-      .about-grid { grid-template-columns: 1fr; gap: 32px; }
+      /* ─ Hero ─ */
+      .hero-eyebrow { font-size: 11px; margin-bottom: 14px; }
+      .hero-subtitle { font-size: 15px; margin-bottom: 28px; max-width: 100%; }
+      /* 2-col grid: name left | stacked buttons right */
+      .hero-content {
+        display: grid;
+        grid-template-columns: 1fr 76px;
+        grid-template-rows: auto auto auto auto;
+        column-gap: 10px;
+        row-gap: 0;
+      }
+      .hero-eyebrow  { grid-column: 1 / -1; grid-row: 1; margin-bottom: 8px; }
+      .hero-name     { grid-column: 1; grid-row: 2; align-self: center; margin-bottom: 0; }
+      .hero-actions  {
+        grid-column: 2; grid-row: 2;
+        display: flex; flex-direction: column;
+        gap: 6px; align-self: center;
+      }
+      .hero-subtitle {
+        grid-column: 1 / -1; grid-row: 3;
+        font-size: 14px; line-height: 1.55;
+        margin-top: 14px; margin-bottom: 0;
+      }
+      /* Stats pushed below the mosaic strip via touch-device class;
+         on plain mobile fallback just sit below subtitle */
+      .hero-stats {
+        grid-column: 1 / -1; grid-row: 4;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px 16px;
+        margin-top: 32px;
+        padding-top: 24px;
+      }
+      .stat-val { font-size: 36px; }
 
+      /* Buttons — 50% smaller */
+      .btn     { font-size: 10px; padding: 6px 8px; width: 100%; justify-content: center; text-align: center; gap: 4px; line-height: 1.3; }
+      .btn svg { width: 10px; height: 10px; flex-shrink: 0; }
+
+      /* ─ Mosaic: smaller cards, hide slowest row ─ */
+      .mosaic-card { width: 148px; height: 96px; padding: 10px 12px; }
+      .mc-big-num  { font-size: 28px; }
+      .mc-big-num sup { font-size: 14px; }
+      .mosaic-row--l2 { display: none; }
+
+      /* On mobile the touch-device class handles the vignette and strip.
+         Default fallback for non-touch small screens: nearly-solid overlay. */
+      .bg-mosaic-vignette {
+        background: rgba(5,8,16,0.94);
+      }
+
+      /* ─ About ─ */
+      .about-grid { grid-template-columns: 1fr; gap: 28px; }
+      .about-photo-wrap { width: 110px; margin: 0 auto 4px; }
+      .about-info { grid-template-columns: 80px 1fr; font-size: 13px; }
+      .ai-val a { word-break: break-all; }
+
+      /* ─ Strengths ─ */
+      .strength-row { grid-template-columns: 1fr; gap: 4px; padding: 16px 0; }
+      .strength-title { font-size: 12.5px; }
+
+      /* ─ Portfolio ─ */
       .portfolio-grid { grid-template-columns: 1fr; }
 
-      .cert-grid { grid-template-columns: 1fr 1fr; }
+      /* ─ Experience ─ */
+      .job-header { flex-direction: column; gap: 3px; align-items: flex-start; }
+      .job-date   { font-size: 11.5px; }
 
-      .award-row { grid-template-columns: 1fr; }
+      /* ─ Skills ─ */
+      .skills-blocks { grid-template-columns: 1fr; gap: 20px; }
+      .skills-blocks .skill-block:last-child { grid-column: auto; }
+      .skills-blocks .skill-block:last-child .skill-block-list {
+        display: block;
+      }
+      .skill-block-num { font-size: 60px; }
 
-      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      /* ─ Certs ─ */
+      .cert-grid  { grid-template-columns: 1fr; }
+      .award-row  { grid-template-columns: 1fr; }
 
-      .skill-row { grid-template-columns: 140px 1fr; }
+      /* ─ Contact ─ */
+      .contact-grid  { grid-template-columns: 1fr; gap: 32px; }
+      .contact-cards { grid-template-columns: 1fr; }
 
-      .hero-stats { gap: 32px; }
+      /* ─ Tag cloud ─ */
+      .tag-cloud { gap: 8px; }
+      .tag { font-size: 11.5px; padding: 5px 12px; }
 
-      .site-footer { padding: 24px; }
-
-      .strengths-grid { grid-template-columns: 1fr; }
-
-      .expertise-area-grid { grid-template-columns: 1fr; }
+      /* ─ Footer ─ */
+      .site-footer {
+        padding: 24px 20px;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        text-align: center;
+      }
     }
 
-    @media (max-width: 480px) {
-      .cert-grid { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
+    /* ══════════════════════════════════════════════
+       RESPONSIVE — SMALL PHONES (≤ 400px)
+    ══════════════════════════════════════════════ */
+    @media (max-width: 400px) {
+      .scene { padding: 64px 16px 44px; }
+      .hero-stats { gap: 14px 12px; }
+      .stat-val { font-size: 32px; }
+      .stat-val sup { font-size: 18px; }
+      .mosaic-card { width: 130px; height: 88px; padding: 8px 10px; }
+    }
+
+    /* ══════════════════════════════════════════════
+       TOUCH DEVICE MOSAIC — detected via JS class
+       Cards are larger, more opaque, slower.
+       Vignette opens up sides so cards peek through.
+    ══════════════════════════════════════════════ */
+    body.touch-device .mosaic-card {
+      width: 168px;
+      height: 112px;
+      padding: 12px 14px;
+      background: rgba(8, 18, 42, 0.92);
+      border-color: rgba(255,255,255,0.14);
+    }
+    body.touch-device .mc-big-num  { font-size: 32px; }
+    body.touch-device .mc-big-num sup { font-size: 15px; }
+    body.touch-device .mc-tag      { font-size: 8px; }
+    body.touch-device .mc-code     { font-size: 9px; }
+
+    /* Touch device: hero starts at top, not centred */
+    body.touch-device #scene-hero { justify-content: flex-start; }
+
+    /* One row, slow, independent of text flow */
+    body.touch-device .mosaic-row--l1 { animation-duration: 55s; }
+    body.touch-device .mosaic-row--r1 { display: none; }
+    body.touch-device .mosaic-row--l2 { display: none; }
+
+    /* Mosaic strip pinned at ~52% down the hero — independent of content height */
+    body.touch-device .mosaic-rows {
+      position: absolute;
+      top: 52%;
+      bottom: auto;
+      height: 136px;
+      padding: 0;
+      justify-content: center;
+    }
+
+    /* Stats pushed below the strip */
+    body.touch-device .hero-stats {
+      margin-top: 210px !important;
+    }
+
+    /* STRIP vignette: solid top → open window → solid bottom */
+    body.touch-device .bg-mosaic-vignette {
+      background: linear-gradient(to bottom,
+        rgba(5,8,16,0.99) 0%,
+        rgba(5,8,16,0.99) 48%,
+        rgba(5,8,16,0.22) 53%,
+        rgba(5,8,16,0.05) 57%,
+        rgba(5,8,16,0.05) 66%,
+        rgba(5,8,16,0.22) 70%,
+        rgba(5,8,16,0.99) 75%,
+        rgba(5,8,16,0.99) 100%
+      );
+    }
+
+    /* Text on solid dark — no shadow needed */
+    body.touch-device .hero-name,
+    body.touch-device .hero-eyebrow,
+    body.touch-device .hero-subtitle,
+    body.touch-device .stat-val,
+    body.touch-device .stat-label { text-shadow: none; }
+
+    /* ══════════════════════════════════════════════
+       MOBILE BOTTOM JOURNEY TRACK
+    ══════════════════════════════════════════════ */
+    .mobile-track {
+      display: none; /* desktop: hidden */
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      height: 54px;
+      background: rgba(5,8,16,0.94);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 200;
+      align-items: center;
+      padding: 0 16px;
+      gap: 10px;
+    }
+
+    .mobile-track-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 2px solid rgba(217,119,87,0.85);
+      box-shadow: 0 0 10px rgba(217,119,87,0.35);
+      overflow: hidden;
+      flex-shrink: 0;
+      animation: charPulse 2.5s ease-in-out infinite;
+    }
+    .mobile-track-avatar img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: top center;
+      display: block;
+    }
+
+    .mobile-track-dots {
+      display: flex;
+      gap: 7px;
+      align-items: center;
+      flex: 1;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .mobile-dot {
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.18);
+      border: 1.5px solid rgba(255,255,255,0.3);
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.3s ease;
+    }
+    .mobile-dot.reached {
+      background: rgba(217,119,87,0.75);
+      border-color: rgba(217,119,87,0.95);
+      box-shadow: 0 0 5px rgba(217,119,87,0.4);
+    }
+    .mobile-dot.active {
+      width: 13px; height: 13px;
+      background: #fff;
+      border-color: #fff;
+      box-shadow: 0 0 10px rgba(255,255,255,0.7);
+    }
+
+    .mobile-track-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.38);
+      flex-shrink: 0;
+      min-width: 52px;
+      text-align: right;
+      transition: color 0.3s;
+    }
+    .mobile-track-label.active { color: rgba(217,119,87,0.85); }
+
+    @media (max-width: 680px) {
+      .mobile-track { display: flex; }
+      /* Padding so last section content isn't hidden behind bottom bar */
+      #scene-contact { padding-bottom: 80px; }
     }
 
     /* ══════════════════════════════════════════════
@@ -1142,7 +1469,25 @@
     <li><a href="#scene-contact">Contact</a></li>
   </ul>
   <a href="images/Roshan_Amasa_AI_Resume.pdf" download class="nav-cv">Download CV</a>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- Mobile full-screen menu -->
+<div class="nav-mobile-overlay" id="navMobileOverlay" role="dialog" aria-label="Navigation menu">
+  <button class="nav-mobile-close" id="navMobileClose" aria-label="Close menu">✕</button>
+  <ul class="nav-mobile-links">
+    <li><a href="#scene-about">About</a></li>
+    <li><a href="#scene-strengths">Strengths</a></li>
+    <li><a href="#scene-portfolio">Portfolio</a></li>
+    <li><a href="#scene-munich">Experience</a></li>
+    <li><a href="#scene-skills">Skills</a></li>
+    <li><a href="#scene-certs">Certs</a></li>
+    <li><a href="#scene-contact">Contact</a></li>
+  </ul>
+  <a href="images/Roshan_Amasa_AI_Resume.pdf" download class="nav-mobile-cv">Download CV</a>
+</div>
 
 <!-- ═══════ JOURNEY TRACK ═══════ -->
 <div id="track">
@@ -2086,6 +2431,34 @@
   <div class="footer-visitor">Page visitors: <span id="visitorCount">—</span></div>
 </footer>
 
+<!-- ═══ DEVICE DETECTION — applied before first paint ═══ -->
+<script>
+(function() {
+  // True touch device: has coarse pointer (finger) AND touch events
+  // Excludes desktop browsers with touch simulation
+  var isTouch = (
+    ('ontouchstart' in window || navigator.maxTouchPoints > 0) &&
+    window.matchMedia('(pointer: coarse)').matches
+  );
+  if (isTouch) {
+    document.body.classList.add('touch-device');
+  }
+  // Also re-check on resize (e.g. DevTools toggle)
+  window.matchMedia('(pointer: coarse)').addEventListener('change', function(e) {
+    document.body.classList.toggle('touch-device', e.matches && ('ontouchstart' in window || navigator.maxTouchPoints > 0));
+  });
+})();
+</script>
+
+<!-- ═══ MOBILE BOTTOM JOURNEY TRACK (phones only) ═══ -->
+<div class="mobile-track" id="mobileTrack" aria-hidden="true">
+  <div class="mobile-track-avatar">
+    <img src="images/Roshan.png" alt="Roshan Amasa">
+  </div>
+  <div class="mobile-track-dots" id="mobileTrackDots"></div>
+  <div class="mobile-track-label" id="mobileTrackLabel">Start</div>
+</div>
+
 <script src="js/getvisitorcount.js"></script>
 
 <script>
@@ -2197,6 +2570,100 @@
     character.style.transform = 'scale(1)';
   }, 400);
 
+  /* ── Mobile bottom track ── */
+  const mobileTrackEl   = document.getElementById('mobileTrack');
+  const mobileDotsEl    = document.getElementById('mobileTrackDots');
+  const mobileLabelEl   = document.getElementById('mobileTrackLabel');
+
+  if (mobileTrackEl && mobileDotsEl) {
+    const mobileDots = [];
+
+    // Build one dot per scene
+    SCENES.forEach((s, i) => {
+      const dot = document.createElement('div');
+      dot.className = 'mobile-dot';
+      dot.setAttribute('role', 'button');
+      dot.setAttribute('aria-label', s.label);
+      dot.addEventListener('click', () => {
+        const target = document.getElementById(s.id);
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+      mobileDotsEl.appendChild(dot);
+      mobileDots.push(dot);
+    });
+
+    let activeMobileIdx = 0;
+
+    function updateMobileDots(idx) {
+      activeMobileIdx = idx;
+      mobileDots.forEach((dot, i) => {
+        dot.classList.toggle('reached', i <  idx);
+        dot.classList.toggle('active',  i === idx);
+      });
+      if (mobileLabelEl) {
+        mobileLabelEl.textContent = SCENES[idx] ? SCENES[idx].label : '';
+        mobileLabelEl.classList.toggle('active', idx > 0);
+      }
+    }
+
+    // Reuse IntersectionObserver to track active scene
+    const mobileSceneObs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const idx = SCENES.findIndex(s => s.id === entry.target.id);
+          if (idx !== -1) updateMobileDots(idx);
+        }
+      });
+    }, { threshold: 0.35 });
+
+    SCENES.forEach(s => {
+      const el = document.getElementById(s.id);
+      if (el) mobileSceneObs.observe(el);
+    });
+
+    updateMobileDots(0);
+  }
+
+})();
+</script>
+
+<script>
+/* ── Mobile hamburger menu ── */
+(function() {
+  const hamburger = document.getElementById('navHamburger');
+  const overlay   = document.getElementById('navMobileOverlay');
+  const closeBtn  = document.getElementById('navMobileClose');
+
+  function openMenu() {
+    overlay.classList.add('open');
+    hamburger.classList.add('open');
+    hamburger.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu() {
+    overlay.classList.remove('open');
+    hamburger.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  hamburger.addEventListener('click', openMenu);
+  closeBtn.addEventListener('click', closeMenu);
+
+  // Close on any link tap
+  overlay.querySelectorAll('a').forEach(function(a) {
+    a.addEventListener('click', closeMenu);
+  });
+
+  // Close on backdrop tap (outside the list)
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeMenu();
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeMenu();
+  });
 })();
 </script>
 
