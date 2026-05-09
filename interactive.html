@@ -1205,7 +1205,7 @@
     body.touch-device #scene-hero { justify-content: flex-start; }
 
     /* One row, slow, independent of text flow */
-    body.touch-device .mosaic-row--l1 { animation-duration: 55s; }
+    body.touch-device .mosaic-row--l1 { animation-duration: 4s; }
     body.touch-device .mosaic-row--r1 { display: none; }
     body.touch-device .mosaic-row--l2 { display: none; }
 
@@ -2667,22 +2667,6 @@
 })();
 </script>
 
-<!-- Voiceflow chatbot -->
-<script type="text/javascript">
-  (function(d, t) {
-    var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
-    v.onload = function() {
-      window.voiceflow.chat.load({
-        verify: { projectID: '6551f93d5605a20007a63c7d' },
-        url: 'https://general-runtime.voiceflow.com',
-        versionID: 'production'
-      });
-    };
-    v.src = 'https://cdn.voiceflow.com/widget/bundle.mjs';
-    v.type = 'text/javascript';
-    s.parentNode.insertBefore(v, s);
-  })(document, 'script');
-</script>
 
 </body>
 </html>
